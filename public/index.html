@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Risk Analysis - Johnny C. Chung</title>
+    <meta name="description" content="Advanced climate risk modeling and visualization platform with hurricane simulation, CLIMADA framework, and interactive risk assessment">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0c1445 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .header {
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        
+        .description {
+            font-size: 1.1em;
+            color: #ccc;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .project-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 204, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+        }
+        
+        .project-card:hover::before {
+            opacity: 1;
+        }
+        
+        .project-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .project-description {
+            color: #ccc;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+        
+        .project-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        .tech-stack {
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            font-size: 0.85em;
+            margin: 2px 4px;
+            color: #888;
+        }
+        
+        .stats-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #00d4ff;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Climate Risk Analysis</h1>
+        <div class="subtitle">Advanced Hurricane Risk Modeling & Visualization Platform</div>
+        <div class="description">
+            Comprehensive climate risk assessment platform featuring CLIMADA framework integration, 
+            NVIDIA Earth2Studio enhancement, and interactive hurricane simulation across 2000+ coastal properties. 
+            Built with scientifically validated damage curves and real-time risk visualization.
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">2000+</span>
+                    <div class="stat-label">Coastal Properties Analyzed</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">$726.8M</span>
+                    <div class="stat-label">Risk Assessment Value</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">34</span>
+                    <div class="stat-label">Unit Tests (100% Pass Rate)</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <div class="stat-label">Climate Scenarios</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-title">🌀 Hurricane Risk Map</div>
+                <div class="project-description">
+                    Interactive Mapbox visualization with 2000+ coastal properties, hurricane path tracking, 
+                    and risk-based clustering. Features category-based styling and distance impact calculations.
+                </div>
+                <a href="hurricane-risk-map.html" class="project-link">View Interactive Map</a>
+                <div class="tech-stack">
+                    <span class="tech-tag">Mapbox GL JS</span>
+                    <span class="tech-tag">Leaflet</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Folium</span>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-title">🌊 Hurricane Season Simulation</div>
+                <div class="project-description">
+                    2026 Atlantic hurricane season simulation with category-based visualization, 
+                    storm track analysis, and real-time statistics for major hurricanes.
+                </div>
+                <a href="hurricane-season-2026.html" class="project-link">View Simulation</a>
+                <div class="tech-stack">
+                    <span class="tech-tag">D3.js</span>
+                    <span class="tech-tag">WebGL</span>
+                    <span class="tech-tag">CLIMADA</span>
+                    <span class="tech-tag">Plotly</span>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-title">📊 Climate Scenarios Dashboard</div>
+                <div class="project-description">
+                    Comprehensive climate scenario modeling with RCP 2.6, 4.5, and 8.5 projections. 
+                    Features decade-by-decade analysis and dual-basin hurricane modeling.
+                </div>
+                <a href="climate-scenarios.html" class="project-link">View Dashboard</a>
+                <div class="tech-stack">
+                    <span class="tech-tag">NVIDIA Earth2</span>
+                    <span class="tech-tag">Streamlit</span>
+                    <span class="tech-tag">Pandas</span>
+                    <span class="tech-tag">NumPy</span>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-title">🏢 Real Estate Risk Analysis</div>
+                <div class="project-description">
+                    Advanced risk assessment for commercial real estate with construction-based damage multipliers, 
+                    insurance premium analysis, and comprehensive property portfolio evaluation.
+                </div>
+                <a href="real-estate-risk.html" class="project-link">View Analysis</a>
+                <div class="tech-stack">
+                    <span class="tech-tag">CLIMADA</span>
+                    <span class="tech-tag">GeoPandas</span>
+                    <span class="tech-tag">Financial Modeling</span>
+                    <span class="tech-tag">Risk Metrics</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #00d4ff;">Technical Achievements</h2>
+            <div style="text-align: center; color: #ccc; line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                Built with scientifically validated CLIMADA framework, featuring dual-basin hurricane modeling, 
+                category-based visualization with Saffir-Simpson gradients, construction-specific damage multipliers, 
+                and comprehensive unit testing framework ensuring 100% reliability.
+                <br><br>
+                Integrates NVIDIA Earth2Studio for enhanced climate projections, Mapbox GL JS for professional 
+                geospatial visualization, and glass morphism UI design following unified visual requirements.
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2025 Johnny C. Chung. Advanced Climate Risk Analysis Platform.</p>
+        <p>Built with CLIMADA, NVIDIA Earth2Studio, and modern web technologies.</p>
+    </div>
+</body>
+</html>

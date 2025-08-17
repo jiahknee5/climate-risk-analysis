@@ -1,0 +1,25 @@
+{
+  "name": "climate-risk-analysis",
+  "version": "1.0.0",
+  "description": "Advanced climate risk modeling and visualization platform",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve public",
+    "build": "echo 'Static site - no build required'",
+    "start": "npx serve public"
+  },
+  "keywords": [
+    "climate",
+    "risk",
+    "hurricane", 
+    "CLIMADA",
+    "visualization",
+    "real-estate",
+    "insurance"
+  ],
+  "author": "Johnny C. Chung",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
